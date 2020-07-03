@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"html/template"
+	"lara-blog/helpers"
 	"log"
 	"net/http"
 )
@@ -10,37 +10,33 @@ type Index struct {
 }
 
 // 首页
-func (this *Index) Index(writer http.ResponseWriter, request *http.Request) {
-	tmpl, err := template.ParseFiles("./views/layout/app.html", "./views/index/index.html")
+func (this *Index) Index(w http.ResponseWriter, request *http.Request) {
+	err := helpers.View(w, "./views/index/index.html", nil)
 
 	if err != nil {
 		log.Fatal(err)
 		return
 	}
-
-	tmpl.Execute(writer, nil)
 }
 
 // 帮助页
 func (this *Index) Help(w http.ResponseWriter, r *http.Request) {
-	tmpl, err := template.ParseFiles("./views/layout/app.html", "./views/index/help.html")
+
+	err := helpers.View(w, "./views/index/help.html", nil)
 
 	if err != nil {
 		log.Fatal(err)
 		return
 	}
-
-	tmpl.Execute(w, nil)
 }
 
 // 关于我
 func (this *Index) About(w http.ResponseWriter, r *http.Request) {
-	tmpl, err := template.ParseFiles("./views/layout/app.html", "./views/index/about.html")
+
+	err := helpers.View(w, "./views/index/about.html", nil)
 
 	if err != nil {
 		log.Fatal(err)
 		return
 	}
-
-	tmpl.Execute(w, nil)
 }
