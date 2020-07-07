@@ -2,24 +2,24 @@ package main
 
 import (
 	. "lara-blog/app/controller"
-	"lara-blog/app/models"
-	"net/http"
+	"lara-blog/routes"
 )
 
 func main() {
 
 	// 初始化数据库连接
-	models.InitDB()
+	//models.InitDB()
 
-	// 静态文件
-	// StripPrefix 替换/static为/public
-	http.Handle("/static/", http.StripPrefix("/static", http.FileServer(http.Dir("./public"))))
+	// 启动路由
+	router := routes.InitRouter()
+
 
 	indexController := &Index{}
-	http.HandleFunc("/", indexController.Index)
-	http.HandleFunc("/help", indexController.Help)
-	http.HandleFunc("/about", indexController.About)
+	{
+		router.Get("/", indexController.Index);
+		router.Get("/help", indexController.Help);
+		router.Get("/about", indexController.About);
+	}
 
-
-	http.ListenAndServe(":8888", nil)
+	router.Run(":8888")
 }

@@ -2,41 +2,23 @@ package controller
 
 import (
 	"lara-blog/helpers"
-	"log"
-	"net/http"
+	"lara-blog/routes"
 )
 
 type Index struct {
 }
 
 // 首页
-func (this *Index) Index(w http.ResponseWriter, request *http.Request) {
-	err := helpers.View(w, "./views/index/index.html", nil)
-
-	if err != nil {
-		log.Fatal(err)
-		return
-	}
+func (this *Index) Index(c *routes.Context) {
+	helpers.View(c, "./views/index/index.html", nil);
 }
 
 // 帮助页
-func (this *Index) Help(w http.ResponseWriter, r *http.Request) {
-
-	err := helpers.View(w, "./views/index/help.html", nil)
-
-	if err != nil {
-		log.Fatal(err)
-		return
-	}
+func (this *Index) Help(c *routes.Context) {
+	helpers.View(c, "./views/index/help.html", nil);
 }
 
 // 关于我
-func (this *Index) About(w http.ResponseWriter, r *http.Request) {
-
-	err := helpers.View(w, "./views/index/about.html", nil)
-
-	if err != nil {
-		log.Fatal(err)
-		return
-	}
+func (this *Index) About(c *routes.Context) {
+	helpers.View(c, "./views/index/about.html", nil);
 }

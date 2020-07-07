@@ -3,8 +3,8 @@ package helpers
 import (
 	"encoding/json"
 	"html/template"
+	"lara-blog/routes"
 	"log"
-	"net/http"
 	"os"
 	"path"
 )
@@ -49,8 +49,7 @@ func Mix(staticFilePath string) string {
 }
 
 // 返回页面
-func View(w http.ResponseWriter, path string, data interface{}) error {
-
+func View(c *routes.Context, path string, data interface{}) {
 	tmpl, err := template.New("app.html").Funcs(template.FuncMap{"Mix": Mix}).ParseFiles(
 		"./views/layout/app.html",
 		"./views/layout/_header.html",
@@ -60,8 +59,8 @@ func View(w http.ResponseWriter, path string, data interface{}) error {
 
 	if err != nil {
 		log.Fatal(err)
-		return err
 	}
 
-	return tmpl.Execute(w, data)
+	tmpl.Execute(c.Writer, data)
+
 }
