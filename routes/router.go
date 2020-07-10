@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 )
@@ -11,10 +10,20 @@ type HandlerFunc func(c *Context)
 type Engine struct {
 	router  map[string]*node
 	handler map[string]HandlerFunc
+	*RouterGroup
+	groups []*RouterGroup
 }
 
 func InitRouter() *Engine {
-	return &Engine{router: make(map[string]*node), handler: make(map[string]HandlerFunc)}
+	engine := &Engine{
+		router:  make(map[string]*node),
+		handler: make(map[string]HandlerFunc),
+	}
+
+	engine.RouterGroup = &RouterGroup{engine: engine}
+	engine.groups = []*RouterGroup{engine.RouterGroup}
+
+	return engine
 }
 
 // 解析URL
@@ -54,7 +63,6 @@ func (this *Engine) getRouter(method string, pattern string) (*node, map[string]
 
 		parts := parsePattern(pattern)
 
-
 		result := root.search(parts, 0)
 
 		if result != nil {
@@ -86,20 +94,37 @@ func (this *Engine) Get(pattern string, handler HandlerFunc) {
 // 路由匹配
 func (this *Engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 
+	handlers := make([]HandlerFunc, 0)
+
+	for _, group := range this.groups {
+		if strings.HasPrefix(req.URL.Path, group.prefix) {
+			handlers = append(handlers, group.middlewares...)
+		}
+	}
+
 	node, params := this.getRouter(req.Method, req.URL.Path)
+
+	c := NewContext(w, req)
+	c.Params = params
 
 	if node != nil {
 		key := req.Method + "-" + node.pattern
 		if handler, ok := this.handler[key]; ok {
-			c := NewContext(w, req)
-			c.Params = params
-			handler(c)
-			return
+			handlers = append(handlers, handler)
+		} else {
+			handlers = append(handlers, func(c *Context) {
+				c.String(404, "NOT FOUND")
+			})
 		}
-		fmt.Fprintf(w, "404 NOT FOUND: %s\n", req.URL)
 	} else {
-		fmt.Fprintf(w, "404 NOT FOUND: %s\n", req.URL)
+		handlers = append(handlers, func(c *Context) {
+			c.String(404, "NOT FOUND")
+		})
 	}
+
+	c.handlers = handlers
+
+	c.Next()
 }
 
 // 启动

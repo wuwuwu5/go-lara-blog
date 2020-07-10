@@ -13,13 +13,13 @@ func main() {
 	// 启动路由
 	router := routes.InitRouter()
 
-
 	indexController := &Index{}
 	{
 		router.Get("/", indexController.Index);
 		router.Get("/help", indexController.Help);
 		router.Get("/about", indexController.About);
 	}
+
 
 	router.Run(":8888")
 }
