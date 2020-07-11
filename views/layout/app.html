@@ -6,11 +6,11 @@
     <link rel="stylesheet" href={{ Mix "/css/app.css"   }}>
 </head>
 <body>
-{{ template "_header"}}
+{{ template "_header" . }}
 <div class="container">
     <div class="offset-md-1 col-md-10">
-        {{ template "content"}}
-        {{ template "_footer"}}
+        {{ template "content" . }}
+        {{ template "_footer" . }}
     </div>
 </div>
 </body>

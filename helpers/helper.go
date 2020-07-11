@@ -1,12 +1,15 @@
 package helpers
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"html/template"
+	"lara-blog/pkg"
 	"lara-blog/routes"
 	"log"
 	"os"
 	"path"
+	"strings"
 )
 
 var (
@@ -49,7 +52,7 @@ func Mix(staticFilePath string) string {
 }
 
 // 返回页面
-func View(c *routes.Context, path string, data interface{}) {
+func View(c *routes.Context, path string, data map[string]interface{}) {
 	tmpl, err := template.New("app.html").Funcs(template.FuncMap{"Mix": Mix}).ParseFiles(
 		"./views/layout/app.html",
 		"./views/layout/_header.html",
@@ -59,6 +62,19 @@ func View(c *routes.Context, path string, data interface{}) {
 
 	if err != nil {
 		log.Fatal(err)
+	}
+
+	cookie, err := c.Req.Cookie(pkg.ValidateCookieName)
+
+	if err == nil {
+		messages, err := base64.StdEncoding.DecodeString(cookie.Value)
+
+		if err == nil {
+			messageStr := string(messages)
+			messageArr := strings.Split(messageStr, "|")
+			data["validateMessage"] = messageArr
+			pkg.DelValidateMessages(c.Writer)
+		}
 	}
 
 	tmpl.Execute(c.Writer, data)

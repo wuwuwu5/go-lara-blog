@@ -2,13 +2,15 @@ package main
 
 import (
 	. "lara-blog/app/controller"
+	"lara-blog/app/models"
+	_ "lara-blog/pkg"
 	"lara-blog/routes"
 )
 
 func main() {
 
 	// 初始化数据库连接
-	//models.InitDB()
+	models.InitDB()
 
 	// 启动路由
 	router := routes.InitRouter()
@@ -20,6 +22,12 @@ func main() {
 		router.Get("/about", indexController.About);
 	}
 
+	// 用户
+	userController := &User{}
+	{
+		router.GET("/signup", userController.Signup)
+		router.POST("/signup", userController.Register)
+	}
 
 	router.Run(":8888")
 }
