@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>{{block "title" .}} Title {{end}}</title>
     <link rel="stylesheet" href={{ Mix "/css/app.css"   }}>
+    {{ template "styles"  }}
 </head>
 <body>
 {{ template "_header" . }}

@@ -2,16 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="53d63aeb-a745-4861-8a49-93653deac64b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/models/user.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/flash.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pkg/validate.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/controller/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/controller/user.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/helper.go" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/helper.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/index/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/index/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/user.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/user.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/layout/app.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/layout/app.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/users/create.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/users/create.html" afterDir="false" />
     </list>
